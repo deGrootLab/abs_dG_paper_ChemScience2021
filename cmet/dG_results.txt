@@ -1,0 +1,13 @@
+     host guest      	                       dG (kJ/mol)         bootstrapped err (kJ/mol)
+cmet CHEMBL3402761_1_21                  :	  -50.05         	    5.21
+cmet CHEMBL3402755_4200_15               :	  -29.31         	    2.60
+cmet CHEMBL3402754_40_14                 :	  -38.00         	    3.23
+cmet CHEMBL3402753_200_13                :	  -32.38         	    3.97
+cmet CHEMBL3402752_30000_12              :	  -29.61         	    3.31
+cmet CHEMBL3402751_2100_11               :	  -24.46         	    3.34
+cmet CHEMBL3402750_400_10                :	  -34.33         	    2.18
+cmet CHEMBL3402749_500_9                 :	  -34.09         	    3.56
+cmet CHEMBL3402748_5300_8                :	  -20.73         	    3.19
+cmet CHEMBL3402747_3400_7                :	  -24.83         	    4.72
+cmet CHEMBL3402745_200_5                 :	  -31.03         	    3.80
+cmet CHEMBL3402744_300_4                 :	  -30.62         	    4.35

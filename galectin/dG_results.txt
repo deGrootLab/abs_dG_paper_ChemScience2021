@@ -1,0 +1,9 @@
+     host guest      	                       dG (kJ/mol)         bootstrapped err (kJ/mol)
+galectin 08_ligNH2                       :	  -31.16         	    3.10
+galectin 07_ligOH                        :	  -36.13         	    4.24
+galectin 06_ligPyr                       :	  -29.61         	    3.88
+galectin 05_ligOEt                       :	  -28.54         	    1.53
+galectin 04_ligNMe2                      :	  -28.23         	    2.75
+galectin 03_ligNHMe                      :	  -31.52         	    2.22
+galectin 02_ligOMe                       :	  -30.18         	    3.29
+galectin 01_ligF                         :	  -29.70         	    2.86

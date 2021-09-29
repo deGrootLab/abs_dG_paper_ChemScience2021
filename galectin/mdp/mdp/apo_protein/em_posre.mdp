@@ -1,0 +1,42 @@
+
+define                   = -DFLEXIBLE -DPOSRES
+
+; RUN CONTROL PARAMETERS
+integrator               = steep
+nsteps                   = 10000
+
+
+emtol                    = 100
+emstep                   = 0.001
+
+; NEIGHBORSEARCHING PARAMETERS
+cutoff-scheme = verlet
+nstlist                  = 10
+ns-type                  = Grid
+pbc                      = xyz
+rlist                    = 1.2
+domain-decomposition     = no
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+; Method for doing electrostatics
+coulombtype              = PME
+rcoulomb-switch          = 0
+rcoulomb                 = 1.1
+epsilon-r                = 1
+vdw-type                 = switch
+rvdw-switch              = 1.0
+rvdw                     = 1.1
+DispCorr                 = EnerPres
+table-extension          = 1
+
+; OPTIONS FOR BONDS    
+constraints              = none
+constraint-algorithm     = Lincs
+continuation      = no
+lincs-order              = 6
+lincs-iter               = 2
+lincs-warnangle          = 30
+
+
+; Free energy control stuff
+free-energy              = no
