@@ -1,3 +1,21 @@
 Download gromacs 2019.4 and replace the files listed below with the versions in this folder.
 src/gromacs/gmxlib/nonbonded/nb_free_energy.cpp
 src/gromacs/mdlib/forcerec.cpp 
+
+
+This fixes gmx bug #3403 (https://gitlab.com/gromacs/gromacs/-/issues/3403) in gmx 2019.4,
+at least for cases where ligand is smaller than rlist. The remaining effect on free energies is small.
+
+For safe handling of ligand expanding beyond rlist during the simulation, use gmx 2021 or newer instead.
+That version has a runtime check and crashes (on purpose) when this occurs to prevent incorrect results.
+
+Typically, mdrun tunes rlist when it starts, ignoring the value specified in the mdp.
+To overcome that, use these mdp settings:
+
+verlet-buffer-tolerance  = -1
+rlist                    = 2.2 ; (nm) or large enough for the maximum expected extent of the decoupled ligand
+
+
+
+Unfortunately, a larger rlist makes simulations noticeably slower while only marginably changing the free energy,
+so the simulations in the paper used the patched 2019.4 version with automatic rlist values.
