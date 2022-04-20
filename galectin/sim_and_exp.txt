@@ -1,0 +1,9 @@
+#         protein                     ligand             simulation dG (kJ/mol)    experimental dG (kJ/mol)  
+         galectin                  08_ligNH2                 -31.2 ± 3.1                -27.8 ± 0.1        
+         galectin                   07_ligOH                 -36.1 ± 4.2                -26.0 ± 0.2        
+         galectin                  06_ligPyr                 -29.6 ± 3.9                -19.8 ± 2.4        
+         galectin                  05_ligOEt                 -28.5 ± 1.5                -22.8 ± 0.3        
+         galectin                  04_ligNMe2                -28.2 ± 2.8                -24.7 ± 0.2        
+         galectin                  03_ligNHMe                -31.5 ± 2.2                -26.6 ± 0.1        
+         galectin                  02_ligOMe                 -30.2 ± 3.3                -26.6 ± 0.3        
+         galectin                   01_ligF                  -29.7 ± 2.9                -30.7 ± 0.2        
