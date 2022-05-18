@@ -1,0 +1,17 @@
+; Include forcefield parameters
+#include "amber99sb-ildn.ff/forcefield.itp"
+#include "lig.itp"
+
+; Include water topology
+#include "amber99sb-ildn.ff/tip3p.itp"
+
+; Include topology for ions
+#include "amber99sb-ildn.ff/ions.itp"
+
+[ system ]
+; Name
+ligand in water
+
+[ molecules ]
+; Compound        #mols
+MOL             1

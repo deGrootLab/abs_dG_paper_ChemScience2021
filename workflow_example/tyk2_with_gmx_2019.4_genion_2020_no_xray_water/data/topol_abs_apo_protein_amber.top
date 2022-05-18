@@ -1,0 +1,24 @@
+; Include forcefield parameters
+#include "amber99sb-ildn.ff/forcefield.itp"
+
+#include "prot_apo.itp"
+#ifdef POSRES
+#include "prot_posre.itp" ; protein position restraints
+#endif
+#ifdef POSRESSOFT
+#include "prot_posre_soft.itp" ; protein position restraints
+#endif
+
+; Include water topology
+#include "amber99sb-ildn.ff/tip3p.itp"
+
+; Include topology for ions
+#include "amber99sb-ildn.ff/ions.itp"
+
+[ system ]
+; Name
+protein in water
+
+[ molecules ]
+; Compound        #mols
+Protein_chain_A         1

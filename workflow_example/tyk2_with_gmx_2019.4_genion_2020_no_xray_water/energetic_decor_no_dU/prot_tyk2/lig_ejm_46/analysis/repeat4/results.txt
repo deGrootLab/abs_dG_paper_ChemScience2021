@@ -1,0 +1,43 @@
+# analyze_dhdl.py, pmx version = 0+untagged.1046.g60b44c7
+# pwd = /netmount/energy/ykhalak/schroedinger_set/absolute/tyk2/workflow_genion2020/energetic_decor_no_dU/prot_tyk2/lig_ejm_46/analysis/repeat4
+# Wed Jun 30 15:38:32 2021 (ykhalak)
+# command = /home/ykhalak/soft/pmx/src/pmx/scripts/analyze_dhdl.py --nbins 10 -iA /netmount/energy/ykhalak/schroedinger_set/absolute/tyk2/workflow_genion2020//energetic_decor_no_dU/prot_tyk2/lig_ejm_46/analysis/repeat4/integA.dat -iB /netmount/energy/ykhalak/schroedinger_set/absolute/tyk2/workflow_genion2020//energetic_decor_no_dU/prot_tyk2/lig_ejm_46/analysis/repeat4/integB.dat
+
+
+ ========================================================
+                       ANALYSIS
+ ========================================================
+  Number of forward (0->1) trajectories: 165
+  Number of reverse (1->0) trajectories: 165
+  Temperature : 298.15 K
+
+ --------------------------------------------------------
+             Crooks Gaussian Intersection     
+ --------------------------------------------------------
+  CGI: Forward Gauss mean =   181.04 kJ/mol std =    11.52 kJ/mol
+  CGI: Reverse Gauss mean =    89.99 kJ/mol std =    16.98 kJ/mol
+  CGI: dG =   143.40 kJ/mol
+    Forward: gaussian quality = 0.97
+             ---> KS-Test Ok
+    Reverse: gaussian quality = 0.43
+             ---> KS-Test Ok
+
+ --------------------------------------------------------
+             Bennett Acceptance Ratio     
+ --------------------------------------------------------
+  BAR: dG =   139.15 kJ/mol
+  BAR: Std Err (analytical) =    10.40 kJ/mol
+  BAR: Conv =     0.98
+
+ --------------------------------------------------------
+             Jarzynski estimator     
+ --------------------------------------------------------
+  JARZ: dG Forward =   160.59 kJ/mol
+  JARZ: dG Reverse =   117.71 kJ/mol
+  JARZ: dG Mean    =   139.15 kJ/mol
+  JARZ_Gauss: dG Forward =   154.10 kJ/mol
+  JARZ_Gauss: dG Reverse =   148.50 kJ/mol
+  JARZ_Gauss: dG Mean    =   151.30 kJ/mol
+  JARZ_Gauss: Std Err (analytical) Forward =     3.11 kJ/mol
+  JARZ_Gauss: Std Err (analytical) Reverse =     6.60 kJ/mol
+ ========================================================

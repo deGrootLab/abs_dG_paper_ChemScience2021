@@ -1,0 +1,37 @@
+; Include forcefield parameters
+#include "amber99sb-ildn.ff/forcefield.itp"
+
+;lig has to be first as it has [ atomtypes ]
+#include "lig.itp"
+#ifdef POSRES
+#include "lig_posre.itp" ; ligand position restraints
+#endif
+#ifdef POSRESSOFT
+#include "lig_posre_soft.itp" ; ligand position restraints
+#endif
+
+#include "prot.itp"
+#ifdef POSRES
+#include "prot_posre.itp" ; protein position restraints
+#endif
+#ifdef POSRESSOFT
+#include "prot_posre_soft.itp" ; protein position restraints
+#endif
+
+; Include water topology
+#include "amber99sb-ildn.ff/tip3p.itp"
+
+; Include topology for ions
+#include "amber99sb-ildn.ff/ions.itp"
+
+[ system ]
+; Name
+protein ligand in water
+
+[ molecules ]
+; Compound        #mols
+Protein_chain_A         1
+MOL 1
+
+; Include intermolecular restraints
+#include "ii.itp"
