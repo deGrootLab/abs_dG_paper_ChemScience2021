@@ -1,0 +1,5 @@
+Restraint generation script: postHoc_restraining_python3.py
+Functions needed for alignment, old imperfect fitting script that fails for proteins with multiple chains: fit_ligs_multiframes_python3.py
+Actual alignment/fitting script: standalone_alignment_script.py
+Decorelation by MCI (use the work() function, still needs to be turned into a standalone script): decorrelate_energetically.py
+Needed for angle and dihedral wraping functions used by decorelation, don't use for restraint generation: find_anchors_and_write_ii.py
