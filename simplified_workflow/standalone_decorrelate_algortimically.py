@@ -3,6 +3,7 @@
 import numpy as np
 import os
 import os.path
+import argparse
 from pmx import ndx
 from pmx.model import Model
 from utils import read_from_mdp, readii_util
@@ -111,79 +112,6 @@ def rotate_and_translate_Lig_to(g, lig, model, idx_lig, idx_pro, order=None, deb
         opid+=1
 
 
-# ==============================================================================
-#                         Derivative Task Classes
-# ==============================================================================
-class Task_PL_decorelate_alg(SGETunedJobTask):
-    #Parameters:
-    p = luigi.Parameter(description='Protein name')
-    l = luigi.Parameter(description='Ligand name')
-    i = luigi.IntParameter(description='Repeat number')
-    m = luigi.IntParameter(description='Sampling sim number')
-    sTI = luigi.Parameter(description='Coupling state for TI')
-
-    folder_path = luigi.Parameter(significant=False,
-                 visibility=ParameterVisibility.HIDDEN,
-                 description='Path to the protein+ligand folder to set up')
-
-    study_settings = luigi.DictParameter(significant=False,
-                 visibility=ParameterVisibility.HIDDEN,
-                 description='Dict of study stettings '
-                 'used to propagate settings to dependencies')
-
-    restr_scheme = luigi.Parameter(significant=True,
-                 description='Restraint scheme to use. '
-                 'Aligned, Fitted or Fixed')
-
-    T = luigi.FloatParameter(significant=False,
-                 default=298.0, #K
-                 description='Temperature in Kelvin. '
-                 'Used to build distribution from restraint strengths.')
-
-    stage="morphes"
-
-    #request 1 cores
-    n_cpu = luigi.IntParameter(visibility=ParameterVisibility.HIDDEN,
-                               default=1, significant=False)
-
-    #avoid Prameter not a string warnings
-    job_name_format = luigi.Parameter(
-        visibility=ParameterVisibility.HIDDEN,
-        significant=False, default="pmx_{task_family}_p{p}_l{l}_{sTI}{i}_{m}",
-        description="A string that can be "
-        "formatted with class variables to name the job with qsub.")
-
-    #debug output
-    debug = luigi.BoolParameter(
-        visibility=ParameterVisibility.HIDDEN,
-        significant=False, default=False,
-        description="show debug output in a log.")
-
-    extra_packages=[np]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._setupState()
-
-        #set variables
-        self.base_path = self.study_settings['base_path']
-        self.sim_path = self.folder_path+"/state%s/repeat%d/%s%d"%(
-            self.sTI, self.i, self.stage, self.m)
-        self.mdp = self.study_settings['mdp_path'] +\
-            "/protein/eq_npt_{0}.mdp".format(
-                self.study_settings['TIstates'][self.sTI])
-
-    def _setupState(self):
-        if(self.sTI != "C"):
-            raise(ValueError("Aligning morphes for TI state{}. "
-                     "{} should only be done on TI stateC.".format(
-                         self.sTI, self.__class__.__name__)))
-            exit(1);
-        # no need to set self.s as it is never used
-        # else:
-        #     self.s="B" # TI stateC depends on NPT sim in stateB
-
-
 
 def work(args):
     #make the C state
@@ -197,7 +125,8 @@ def work(args):
                             atomNum=len(m_A.atoms)) #aligned output
 
     ndx_file_A = ndx.IndexFile(args.i, verbose=False)
-    if(not "MOL" in ndx_file_A):
+    print(ndx_file_A.names)
+    if(not "MOL" in ndx_file_A.names):
         raise(Exception(f"index file {args.i} does not contain a [ MOL ] group!"))
     l_ndx = np.asarray(ndx_file_A["MOL"].ids)-1
 
@@ -209,7 +138,7 @@ def work(args):
     conv_ks=ks
     for k in range(1,6):
         conv_ks[k]=conv_ks[k]*(np.pi/180.0)**2
-    kT = 8.31445985*0.001*self.T
+    kT = 8.31445985*0.001*args.T
     sigmas = np.sqrt(kT/conv_ks)
     #means and sigmas in deg and nm
 
@@ -221,7 +150,7 @@ def work(args):
         cov_mat[j,j]=sigmas[j]*sigmas[j]
 
     if(args.debug):
-        print("debug: starting on trajectory: {}".format(trj_A_src))
+        print(f"debug: starting on trajectory: {args.f}")
 
     #output frame files
     ods=os.path.splitext(args.od)
@@ -241,7 +170,7 @@ def work(args):
         od=f"{ods[0]}{fridx}{ods[1]}"
         if(not os.path.isfile(od)):
             frame_A.update(m_A, uv=True, uf=True)
-            if(self.debug):
+            if(args.debug):
                 print("debug: \tframe {}".format(fridx))
 
             #draw restraint coords from independent multivariate distribution
@@ -302,11 +231,13 @@ if __name__== "__main__":
                         type=str, help='decorelated trajectory')
     parser.add_argument('-od', dest='od', default="start.gro",
                         type=str, help='individual frames of the decorelated trajectory. A frame number will be added before the file extention.')
+    parser.add_argument('-T', dest='T', default=300.0,
+                        type=float, help='Temperature in K')
     #parser.add_argument('--no_reuse_existing_pbc_fixes', dest='reuse_existing_pbc_fixes', action='store_false')
     #parser.add_argument('-b', dest='b', default=2256.0,
                         #type=float, help='trj start time (ps)')
-    #parser.add_argument('--no_write_aligned_trj', dest='write_aligned_trj', action='store_false')
-    parser.add_argument('--first_frame_only', dest='first_frame_only', action='store_true')
+    parser.add_argument('--no_write_aligned_trj', dest='write_aligned_trj', action='store_false')
+    #parser.add_argument('--first_frame_only', dest='first_frame_only', action='store_true')
     parser.add_argument('--debug', dest='debug', action='store_true')
 
 
